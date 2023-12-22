@@ -30,6 +30,6 @@ mavenPublishing {
         // whether to publish a sources jar
         sourcesJar = true,
     ))
-    publishToMavenCentral(SonatypeHost.S01)
+    publishToMavenCentral(SonatypeHost.S01, true)
     signAllPublications()
 }
