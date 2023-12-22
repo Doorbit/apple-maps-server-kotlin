@@ -1,5 +1,9 @@
+import com.vanniktech.maven.publish.SonatypeHost
+
 plugins {
     kotlin("jvm") version "1.9.20"
+    id("com.vanniktech.maven.publish") version "0.26.0"
+    id("org.jetbrains.dokka") version "1.9.10"
 
     `java-library`
     `maven-publish`
@@ -28,4 +32,12 @@ tasks.jar {
 
 java {
     withSourcesJar()
+}
+
+
+
+mavenPublishing {
+
+    publishToMavenCentral(SonatypeHost.S01)
+    signAllPublications()
 }
