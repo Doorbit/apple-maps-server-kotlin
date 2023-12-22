@@ -15,7 +15,7 @@ We support the following APIs by Apple Maps SDK. Each API supports the full set 
 
 ```groovy
 dependencies {
-    implementation("com.doorbit:apple-maps-server-kotlin:0.1.0")
+    implementation("com.doorbit:apple-maps-server-kotlin:0.2.0")
 }
 ```
 
@@ -25,7 +25,7 @@ dependencies {
 <dependency>
   <groupId>com.doorbit</groupId>
   <artifactId>apple-maps-server-kotlin</artifactId>
-  <version>0.1.0</version>
+  <version>0.2.0</version>
 </dependency>
 ```
 
