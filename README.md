@@ -1,6 +1,6 @@
 # apple-maps-server-kotlin
 
-Lightweight SDK written in Kotlin for the Apple Maps Server API for use in JVM.
+Lightweight SDK written in Kotlin for the Apple Maps Server API to use with Kotlin or Java.
 
 ## Features
 
