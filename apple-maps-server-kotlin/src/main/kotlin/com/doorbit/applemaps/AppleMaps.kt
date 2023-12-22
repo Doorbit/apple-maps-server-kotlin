@@ -11,25 +11,46 @@ import java.net.http.HttpRequest
 import java.net.http.HttpResponse.BodyHandlers
 import java.time.Duration
 
+/**
+ * @param authToken The Apple Maps authorization token to use when invoking the Apple Maps API.
+ * @param timeout The timeout to use when invoking the Apple Maps API.
+ */
 class AppleMaps(
     authToken: String,
     private val timeout: Duration,
 ) {
+    /**
+     * @param authToken The Apple Maps authorization token to use when invoking the Apple Maps API.
+     */
     constructor(authToken: String) : this(authToken, DEFAULT_TIMEOUT)
 
     private val objectMapper = defaultObjectMapper()
     private val authorizationService = AppleMapsAuthorizationService(objectMapper, API_SERVER, timeout, authToken)
     private val httpClient = HttpClient.newHttpClient()
 
+    /**
+     * Geocodes the given address and returns a list of found places.
+     * @param address The address to geocode, e.g. "Jungfernstieg 1, 20354 Hamburg, Germany".
+     */
     fun geocode(address: String): List<Place> {
         return geocode(GeocodeInput(address))
     }
 
+    /**
+     * Geocodes the given input and returns a list of found places.
+     * @param input The input parameters that will be sent to Apple Maps for geocoding.
+     */
     fun geocode(input: GeocodeInput): List<Place> {
         val uri = URI.create("$GEOCODING_URL${input.toQueryString()}")
         return invokeApi<PlacesResponse>(uri).results
     }
 
+    /**
+     * Reverse geocodes the given latitude and longitude and returns a list of found places.
+     * @param latitude Latitude of a geographic point
+     * @param longitude Longitude of a geographic point
+     * @param language The language to use for the response, specified using a BCP 47 language code. Defaults to "en-US".
+     */
     fun reverseGeocode(latitude: Double, longitude: Double, language: String = "en-US"): List<Place> {
         val uri = URI.create("$REVERSE_GEOCODING_URL?loc=$latitude,$longitude&lang=$language")
         return invokeApi<PlacesResponse>(uri).results

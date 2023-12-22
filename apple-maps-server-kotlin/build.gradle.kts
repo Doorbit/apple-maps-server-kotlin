@@ -1,3 +1,5 @@
+import com.vanniktech.maven.publish.JavadocJar
+import com.vanniktech.maven.publish.KotlinJvm
 import com.vanniktech.maven.publish.SonatypeHost
 
 plugins {
@@ -6,11 +8,10 @@ plugins {
     id("org.jetbrains.dokka") version "1.9.10"
 
     `java-library`
-    `maven-publish`
 }
 
 group = "com.doorbit"
-version = "0.1.0"
+version = "0.1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -23,21 +24,12 @@ dependencies {
     implementation("com.fasterxml.jackson.core:jackson-databind:2.16.0")
 }
 
-tasks.jar {
-    manifest {
-        attributes(mapOf("Implementation-Title" to project.name,
-            "Implementation-Version" to project.version))
-    }
-}
-
-java {
-    withSourcesJar()
-}
-
-
-
 mavenPublishing {
-
+    configure(KotlinJvm(
+        javadocJar = JavadocJar.Dokka("dokkaHtml"),
+        // whether to publish a sources jar
+        sourcesJar = true,
+    ))
     publishToMavenCentral(SonatypeHost.S01)
     signAllPublications()
 }
