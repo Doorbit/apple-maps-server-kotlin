@@ -41,6 +41,11 @@ class AppleMapsAuthorizationService(
             .build()
         return try {
             val response = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofByteArray())
+
+            if (response.statusCode() != 200) {
+                throw RuntimeException("Received ${response.statusCode()} when invoking Apple Maps API: ${response.body().decodeToString()}")
+            }
+
             val jsonNode = objectMapper.readValue(response.body(), JsonNode::class.java)
             val tokenString = jsonNode["accessToken"].asText()
             val expiresAt = extractExpiry(tokenString)

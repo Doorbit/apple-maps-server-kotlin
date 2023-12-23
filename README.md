@@ -119,3 +119,12 @@ Once you got your Maps ID and downloaded your private key, you can use the Token
 
 Apple provides a free daily limit of 250,000 map views and 25,000 service calls per Apple Developer Program membership.
 You can review your current spend on the Apple Maps dashboard: https://maps.developer.apple.com/
+
+### Best practices
+
+#### Always provide location hints
+
+Try to always provide a hint of the user's location or the user's geographic area of interest to the geocoder. Otherwise, there might be no result. For instance,
+specifying just "Hauptstrasse" or "Main St" most likely won't return a single result, because Apple doesn't know what you are looking for. However, when you specify 
+it including a location hint, you will get an result. Also, when using the geocoding API for autocompletion, you should always provide a location hint to the geocoder,
+as it wouldn't add much value to the user if you would just return a list of random streets in the world.
