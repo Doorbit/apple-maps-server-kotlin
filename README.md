@@ -109,23 +109,24 @@ val input = GeocodeInput(
 api.geocode(input).let(::println)
 ```
 
-### Authorization
+## Authorization
 
 You need to provide an authorization token to use the Apple Maps Server API.
-Your authorization token is then exchanged for a short-lived access token. This SDK handles this for you and also caches and refreshes it automatically.
+Your authorization token is then exchanged for a short-lived access token. This SDK handles the latter part for you and also caches and refreshes the access token as needed.
 
 To obtain the authorization token, first you have to create a Maps ID and private key through your Apple Developer Account.
 Click [here](https://developer.apple.com/documentation/mapkitjs/creating_a_maps_identifier_and_a_private_key) for a tutorial by Apple.
-Once you got your Maps ID and downloaded your private key, you can use the Token Generator provided by Apple to generate your authorization token: https://maps.developer.apple.com/token-maker
+Once you got your Maps ID and downloaded your private key, you can use the Token Generator provided by Apple to generate your authorization token: https://maps.developer.apple.com/token-maker 
+It is also possible to create one by API, which is required if you want to create a permanent one, as the maximum selectable token lifespan on the token-maker tool is limited to a couple of months only. Please refer to the documentation provided by Apple if you want to create an auth token programmatically.
 
-### Request quota to Apple Maps Geocoding API
+## Request quota to Apple Maps Geocoding API
 
 Apple provides a free daily limit of 250,000 map views and 25,000 service calls per Apple Developer Program membership.
 You can review your current spend on the Apple Maps dashboard: https://maps.developer.apple.com/
 
-### Best practices
+## Best practices
 
-#### Always provide location hints
+### Always provide location hints
 
 Try to always provide a hint of the user's location or the user's geographic area of interest to the geocoder. Otherwise, there might be no result. For instance,
 specifying just "Hauptstrasse" or "Main St" most likely won't return a single result, because Apple doesn't know what you are looking for. However, when you specify 
