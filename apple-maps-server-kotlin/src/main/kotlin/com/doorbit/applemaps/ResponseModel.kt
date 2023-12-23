@@ -54,7 +54,7 @@ data class DisplayMapRegion(
  * @param dependentLocalities Typically the dependent localities of the place, e.g. ["Hamburg-Altstadt", "Hamburg-St. Georg" or ["The East Cut", "South Beach"].
  */
 data class StructuredAddress(
-    val locality: String,
+    val locality: String?,
     val postCode: String?,
     val subLocality: String?,
     val thoroughfare: String?,
