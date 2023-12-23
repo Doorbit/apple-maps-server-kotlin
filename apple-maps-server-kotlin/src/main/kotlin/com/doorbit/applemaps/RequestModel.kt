@@ -41,7 +41,7 @@ data class BoundingBox(
     val westLongitude: Double
 ) {
     fun toQueryString(): String {
-        return "$southLatitude,$westLongitude,$northLatitude,$eastLongitude"
+        return "$northLatitude,$eastLongitude,$southLatitude,$westLongitude"
     }
 
 }
