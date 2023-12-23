@@ -93,10 +93,13 @@ val api = AppleMaps(authToken = "your-apple-maps-auth-token")
 
 /**
  * In this example we are searching only for the street address "Jungfernstieg 1".
- * Apple provides a parameter called "searchLocation" which acts as a hint for the geocoder where to search.
+ * Apple provides parameters to give a hint in what geographic location to search for the address.
+ * One of them is called "userLocation" which may reflect the current location of the searching person.
+ * It is strongly recommended to always provide a location hint of some sort to Apple, otherwise you risk getting a 0 result.
+ *
  * In this case, we are providing coordinates of somewhere in Hamburg, Germany.
- * This is useful if your users only type in a street address without a city or country and you will be able to 
- * already autocomplete the address based on the users location.
+ * This is useful if your users only type in a street address without a city or country and you will be able to already autocomplete
+ * the address.
  */
 val input = GeocodeInput(
     address = "Jungfernstieg 1",
