@@ -16,7 +16,7 @@ jobs:
           distribution: 'temurin'
           java-version: 21
 
-      - uses: gradle/gradle-build-action@v2.9.0
+      - uses: gradle/gradle-build-action@v2.11.1
 
       - name: Publish Artifacts
         run: ./gradlew publishAllPublicationsToMavenCentral --no-configuration-cache
