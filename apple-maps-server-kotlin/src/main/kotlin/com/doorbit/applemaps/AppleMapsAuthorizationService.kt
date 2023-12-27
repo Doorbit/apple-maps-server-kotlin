@@ -29,7 +29,7 @@ class AppleMapsAuthorizationService(
 
     private fun isExpired(): Boolean {
         if (accessToken == null) return true
-        return accessToken!!.expiresAt.minusSeconds(ACCESS_TOKEN_GRACE_PERIOD_SECONDS).isAfter(Instant.now())
+        return accessToken!!.expiresAt.minusSeconds(ACCESS_TOKEN_GRACE_PERIOD_SECONDS).isBefore(Instant.now())
     }
 
     private fun refreshAccessToken(): AccessToken {
