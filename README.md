@@ -4,8 +4,6 @@ Lightweight SDK written in Kotlin for the Apple Maps Server API to use with Kotl
 
 ## Features
 
-We support the following APIs by Apple Maps SDK. Each API supports the full set of parameters.
-
 - ✅ Geocoding - [see Apple Maps API Description](https://developer.apple.com/documentation/applemapsserverapi/geocode_an_address)
 - ✅ Reverse Geocoding - [see Apple Maps API Description](https://developer.apple.com/documentation/applemapsserverapi/reverse_geocode_a_location)
 - ✅ Exchanging long-lived authorization token for short-lived access_token (incl. cache & refresh handling)
