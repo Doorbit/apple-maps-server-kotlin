@@ -38,7 +38,7 @@ dependencies {
 <dependency>
   <groupId>com.doorbit</groupId>
   <artifactId>apple-maps-server-kotlin</artifactId>
-  <version>0.2.4</version>
+  <version>0.3.0</version>
 </dependency>
 ```
 
