@@ -4,9 +4,23 @@ Lightweight SDK written in Kotlin for the Apple Maps Server API to use with Kotl
 
 ## Features
 
-- ✅ Geocoding - [see Apple Maps API Description](https://developer.apple.com/documentation/applemapsserverapi/geocode_an_address)
-- ✅ Reverse Geocoding - [see Apple Maps API Description](https://developer.apple.com/documentation/applemapsserverapi/reverse_geocode_a_location)
-- ✅ Exchanging long-lived authorization token for short-lived access_token (incl. cache & refresh handling)
+### Geocode
+
+Transforms a street address into geographic coordinates and a fully structured address. [see Apple Maps API Description](https://developer.apple.com/documentation/applemapsserverapi/geocode_an_address)
+This API typically responds only 1 result. If you want to get a list of results for a fuzzy search prompt, use the Autocomplete API instead.
+
+### Reverse-Geocode
+
+Transforms geographic coordinates into a fully structured address. [see Apple Maps API Description](https://developer.apple.com/documentation/applemapsserverapi/reverse_geocode_a_location)
+
+### Autocompletion
+
+Returns a list of autocompletion results for a given input prompt. These can be either addresses or points of interests.
+
+### Search for places
+
+Returns a list of places that match the given search criteria. These can be either addresses or points of interests.
+
 
 ## Installation
 
@@ -31,17 +45,6 @@ dependencies {
 ## Usage
 
 **Simple example**
-
-```kotlin
-import com.doorbit.applemaps.AppleMaps
-import com.doorbit.applemaps.Place
-
-val api = AppleMaps(authToken = "your-apple-maps-auth-token")
-
-// Geocode an address to get a coordinate and a fully structured address
-val places : List<Place> = api.geocode("Jungfernstieg 1, 20354 Hamburg")
-println(places)
-```
 
 The above example's result is equivalent to this JSON:
 
@@ -123,6 +126,16 @@ Apple provides a free daily limit of 250,000 map views and 25,000 service calls 
 You can review your current spend on the Apple Maps dashboard: https://maps.developer.apple.com/
 
 ## Best practices
+
+### Use Autocomplete API for fuzzy search prompts
+
+In case you want to implement a free text search prompt, you should use the Autocomplete API instead of the Geocoding API.
+The geocoding API is meant to resolve a full, or almost full address to a `Places` result. 
+The Autocomplete API is meant to resolve a fuzzy search prompt to a list of `Places` results.
+This really makes a difference in result completeness. For example, sending a search prompt `Dorfstr` to the geocoding API will return 1 result, whereas sending the same prompt to the Autocomplete API will 
+return more than 10 results in different cities. The same goes for the Search API.
+For this reason we introduced the optional parameter `followCompletionUrls: Boolean` to the autocompletion API. If you set it to true, the SDK will automatically follow the completion URLs provided by Apple and return the results of the Search API additionally. 
+This is useful if you want to provide a search prompt that returns a list of places already, without the need to click on a result first and then fetch the details of the place in a 2nd step.
 
 ### Always provide location hints
 

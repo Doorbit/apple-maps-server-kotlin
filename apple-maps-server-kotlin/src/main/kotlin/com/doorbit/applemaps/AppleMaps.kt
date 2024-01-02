@@ -29,20 +29,50 @@ class AppleMaps(
     private val httpClient = HttpClient.newHttpClient()
 
     /**
-     * Geocodes the given address and returns a list of found places.
-     * @param address The address to geocode, e.g. "Jungfernstieg 1, 20354 Hamburg, Germany".
-     */
-    fun geocode(address: String): List<Place> {
-        return geocode(GeocodeInput(address))
-    }
-
-    /**
      * Geocodes the given input and returns a list of found places.
      * @param input The input parameters that will be sent to Apple Maps for geocoding.
      */
     fun geocode(input: GeocodeInput): List<Place> {
         val uri = URI.create("$GEOCODING_URL${input.toQueryString()}")
         return invokeApi<PlacesResponse>(uri).results
+    }
+
+    /**
+     * Autocompletes the given input and returns a list of autocomplete results.
+     * This can be a (partial) address or a POI name, for example.
+     *
+     * @param input The input parameters that will be sent to Apple Maps for autocompletion.
+     * @param followCompletionUrls Calls the completion URLs for each autocomplete result in parallel and enriches the AutocompleteResult with Places information. Each resolved completion URL will consume your Service Request quota.
+     */
+    fun autocomplete(input: SearchInput, followCompletionUrls: Boolean = false): List<AutocompleteResult> {
+        val uri = URI.create("$AUTOCOMPLETE_URL${input.toQueryString()}")
+
+        val results = invokeApi<SearchAutocompleteResponse>(uri).results
+
+        if (!followCompletionUrls) {
+            return results
+        }
+
+        return results.parallelStream().map {
+            it.withPlaces(resolveAutoCompletionUrl(it.completionUrl).results)
+        }.toList()
+    }
+
+    /**
+     * Searches for the given input and returns a search result.
+     */
+    fun search(input: SearchInput): SearchResponse {
+        val uri = URI.create("$SEARCH_URL${input.toQueryString()}")
+        return invokeApi<SearchResponse>(uri)
+    }
+
+    /**
+     * Resolves the given completion URL and returns a SearchResponse.
+     * @param completionUrl The completion URL to resolve, as returned by the autocomplete API.
+     */
+    fun resolveAutoCompletionUrl(completionUrl: String): SearchResponse {
+        val uri = URI.create("$API_SERVER$completionUrl")
+        return invokeApi<SearchResponse>(uri)
     }
 
     /**
@@ -87,6 +117,8 @@ class AppleMaps(
     companion object {
         private const val API_SERVER = "https://maps-api.apple.com"
         private const val GEOCODING_URL = "$API_SERVER/v1/geocode"
+        private const val SEARCH_URL = "$API_SERVER/v1/search"
+        private const val AUTOCOMPLETE_URL = "$API_SERVER/v1/searchAutocomplete"
         private const val REVERSE_GEOCODING_URL = "$API_SERVER/v1/reverseGeocode"
         private val DEFAULT_TIMEOUT = Duration.ofSeconds(10)
     }

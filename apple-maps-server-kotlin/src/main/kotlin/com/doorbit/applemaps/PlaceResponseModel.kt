@@ -25,11 +25,6 @@ data class Place(
     val countryCode: String
 )
 
-data class Coordinate(
-    val latitude: Double,
-    val longitude: Double
-)
-
 /**
  * A viewbox that can be used to display the place on a map. It shows the place itself and its surrounding area.
  * The viewbox is defined by 2 points. Lat/Lon of the upper right corner and Lat/Lon of the lower left corner of the viewbox.

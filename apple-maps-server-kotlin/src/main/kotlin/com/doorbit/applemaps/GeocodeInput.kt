@@ -1,7 +1,6 @@
 package com.doorbit.applemaps
 
 import java.net.URLEncoder
-import kotlin.text.Charsets.UTF_8
 
 /**
  * Possible input for the geocoding API.
@@ -23,35 +22,13 @@ data class GeocodeInput(
 
     fun toQueryString(): String {
         val params = mutableListOf<String>()
-        params.add("?q=${URLEncoder.encode(address, UTF_8)}")
-        limitToCountries?.let { countries -> params.add("limitToCountries=${countries.joinToString(",") { URLEncoder.encode(it, UTF_8) }}") }
-        language?.let { params.add("language=${URLEncoder.encode(it, UTF_8)}") }
+        params.add("?q=${URLEncoder.encode(address, Charsets.UTF_8)}")
+        limitToCountries?.let { countries -> params.add("limitToCountries=${countries.joinToString(",") { URLEncoder.encode(it, Charsets.UTF_8) }}") }
+        language?.let { params.add("lang=${URLEncoder.encode(it, Charsets.UTF_8)}") }
         searchLocation?.let { params.add("searchLocation=${it.toQueryString()}") }
         searchRegion?.let { params.add("searchRegion=${it.toQueryString()}") }
         userLocation?.let { params.add("userLocation=${it.toQueryString()}") }
         return params.joinToString("&")
     }
 
-}
-
-/**
- * A viewbox that can be used as a hint for the geocoding service.
- * The viewbox is defined by 2 points. Lat/Lon of the upper right corner and Lat/Lon of the lower left corner of the viewbox.
- */
-data class BoundingBox(
-    val northLatitude: Double,
-    val eastLongitude: Double,
-    val southLatitude: Double,
-    val westLongitude: Double
-) {
-    fun toQueryString(): String {
-        return "$northLatitude,$eastLongitude,$southLatitude,$westLongitude"
-    }
-
-}
-
-data class LatLon(val latitude: Double, val longitude: Double) {
-    fun toQueryString(): String {
-        return "$latitude,$longitude"
-    }
 }
