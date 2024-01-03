@@ -28,7 +28,7 @@ Returns a list of places that match the given search criteria. These can be eith
 
 ```groovy
 dependencies {
-    implementation("com.doorbit:apple-maps-server-kotlin:0.2.4")
+    implementation("com.doorbit:apple-maps-server-kotlin:0.3.0")
 }
 ```
 
