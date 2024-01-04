@@ -46,6 +46,14 @@ dependencies {
 
 **Simple example**
 
+```kotlin
+val api = AppleMaps(authToken = "your-apple-maps-auth-token")
+
+val input = GeocodeInput(address = "Jungfernstieg 1")
+
+api.geocode(input).let(::println)
+```
+
 The above example's result is equivalent to this JSON:
 
 ```json
