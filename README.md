@@ -1,4 +1,4 @@
-# An Apple Maps Geocoding SDK written in Kotlin
+# An Apple Maps SDK written in Kotlin
 
 Lightweight SDK written in Kotlin for the Apple Maps Server API to use with Kotlin or Java.
 
